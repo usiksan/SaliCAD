@@ -3,6 +3,7 @@
 #include "../../objects/SdGraphText.h"
 #include "../../objects/SdGraphIdent.h"
 
+//TODO need to complete with graph text import from KiCad
 struct KiCadText
   {
     QString    mType;
@@ -15,6 +16,7 @@ struct KiCadText
 
 static void kicadTextAt( SdScanerKiCad *scaner, KiCadText *text )
   {
+  Q_UNUSED(text)
   // text->mOrg.setX( scaner->tokenNeedPartCoord() );
   // text->mOrg.setY( scaner->tokenNeedPartCoord() );
   scaner->tokenNeedValue('n');
@@ -24,12 +26,14 @@ static void kicadTextAt( SdScanerKiCad *scaner, KiCadText *text )
 
 static void kicadTextLayer( SdScanerKiCad *scaner, KiCadText *text )
   {
-
+  Q_UNUSED(scaner)
+  Q_UNUSED(text)
   }
 
 static void kicadTextEffects( SdScanerKiCad *scaner, KiCadText *text )
   {
-
+  Q_UNUSED(scaner)
+  Q_UNUSED(text)
   }
 
 

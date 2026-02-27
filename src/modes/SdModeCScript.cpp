@@ -7,6 +7,8 @@
 #include "windows/SdWEditorGraph.h"
 #include "windows/SdDExpressionEdit.h"
 
+//TODO need to complete with CScript mode. Calculation script insert and edit
+
 SdModeCScript::SdModeCScript(SdWEditorGraph *editor, SdProjectItem *obj) :
   SdMode( editor, obj ),
   mPropText(nullptr),
@@ -192,10 +194,14 @@ bool SdModeCScript::wheel(SdPoint p)
 
 void SdModeCScript::keyDown(int key, QChar ch)
   {
+  Q_UNUSED(key)
+  Q_UNUSED(ch)
   }
 
 void SdModeCScript::keyUp(int key, QChar ch)
   {
+  Q_UNUSED(key)
+  Q_UNUSED(ch)
   }
 
 SdPoint SdModeCScript::enterPrev()
@@ -219,6 +225,8 @@ void SdModeCScript::stopDrag(SdPoint)
 
 bool SdModeCScript::getInfo(SdPoint p, QString &info)
   {
+  Q_UNUSED(p)
+  Q_UNUSED(info)
   return false;
   }
 

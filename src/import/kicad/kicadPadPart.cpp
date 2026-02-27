@@ -8,6 +8,8 @@
 
 void kicadPadPart( SdScanerKiCad *scaner, SdPItemPart *part )
   {
+  //TODO need to complete with pad import
+  Q_UNUSED(part);
   QString padNumber;
   if( !scaner->tokenNeedValue( 's', padNumber, QObject::tr("Need pad number") ) ) return;
 

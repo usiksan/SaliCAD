@@ -230,11 +230,17 @@ void SdDxfContext::putPicture(SdProjectItem *item)
 
 void SdDxfContext::setPen(SdPvInt width, QColor color, SdPvInt lineStyle)
   {
-
+  //TODO complete dxf export, setPen
+  Q_UNUSED(width)
+  Q_UNUSED(color)
+  Q_UNUSED(lineStyle)
   }
+
 
 void SdDxfContext::line(SdPoint a, SdPoint b)
   {
+  Q_UNUSED(a)
+  Q_UNUSED(b)
 #if 0
   a = ConvertPoint(a);
   b = ConvertPoint(b);
@@ -381,32 +387,39 @@ void SdDxfContext::line(SdPoint a, SdPoint b)
 
 void SdDxfContext::fillRect(SdRect r)
   {
-
+  Q_UNUSED(r)
   }
 
 void SdDxfContext::arc(SdPoint center, SdPoint start, SdPoint stop)
   {
-
+  Q_UNUSED(center)
+  Q_UNUSED(start)
+  Q_UNUSED(stop)
   }
 
 void SdDxfContext::circle(SdPoint center, int radius)
   {
-
+  Q_UNUSED(center)
+  Q_UNUSED(radius)
   }
 
 void SdDxfContext::circleFill(SdPoint center, int radius)
   {
-
+  Q_UNUSED(center)
+  Q_UNUSED(radius)
   }
 
 void SdDxfContext::regionFill(const SdPointList &points, const SdPropLine &prop)
   {
-
+  Q_UNUSED(points)
+  Q_UNUSED(prop)
   }
 
 void SdDxfContext::polygon(const SdPointList &points, const SdPolyWindowList &windows, SdLayer *layer)
   {
-
+  Q_UNUSED(points)
+  Q_UNUSED(windows)
+  Q_UNUSED(layer)
   }
 
 

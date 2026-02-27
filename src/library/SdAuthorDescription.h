@@ -9,9 +9,6 @@ class SdAuthorDescription
   {
     QString mAuthorName;           //!< Author name
     QString mAuthorNameWithRank;   //!< Author name with rank and quality symbols
-    // qint32  mTotalObjectCount;     //!< Total number of objects (components, cases, etc.) created by the author
-    // qint32  mObjectComplaintCount; //!< Current number of objects with complaints
-    // qint32  mTotalComplaintCount;  //!< Total number of complaints received for the author's objects
     quint8  mFlags;                //!< Reserved
     quint8  mRank;                 //!< Author volume rank
     quint8  mQuality;              //!< Author quality rating

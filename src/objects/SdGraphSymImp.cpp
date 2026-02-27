@@ -933,7 +933,7 @@ bool SdGraphSymImp::isUsed(SdObject *obj) const
 bool SdGraphSymImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
   Q_UNUSED(parent)
-  if( SdLibraryStorage::instance()->cfIsOlder(mComponent) || SdLibraryStorage::instance()->cfIsOlder(mSymbol) || SdLibraryStorage::instance()->cfIsOlder(mPart) ) {
+  if( SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(mComponent) || SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(mSymbol) || SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(mPart) ) {
     //There newer objects. Upgrade.
 
     //Prepare newer objects

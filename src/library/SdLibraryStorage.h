@@ -24,6 +24,7 @@ Description
 #include "SdLibraryReference.h"
 #include "SdLibraryHeader.h"
 #include "SdAuthorDescription.h"
+#include "SdCompliantDescr.h"
 #include "SvLib/SvSingleton.h"
 #include "objects/SdFileUid.h"
 
@@ -51,18 +52,20 @@ class SdLibraryStorage : public QObject
   {
     Q_OBJECT
 
-    QString                mLibraryPath;       //!< Path where library objects resides
-    QFileInfoList          mScanList;          //!< Library scan list contains list of subdirectories of library
-    QTimer                 mScanTimer;         //!< Scan timer for periodic scan library for new or deleted objects
-    SdLibraryReferenceMap  mReferenceMap;      //!< Map with key of object id and value is SdLibraryReference
-    QFile                  mHeaderFile;        //!< File with header of all objects in library
-    SdAuthorAssocMap       mAuthorAssoc;       //!< Author public hash to author name association
-    qint32                 mPrivateLastSync;   //!< Time of last sync with private cloud
-    qint32                 mPrivateLastList;   //!< Time of last list from private cloud
-    qint32                 mGlobalLastSync;    //!< Time of last sync with global storage
-    qint32                 mGlobalLastList;    //!< Time of last list from global storage
+    QString                mLibraryPath;           //!< Path where library objects resides
+    QFileInfoList          mScanList;              //!< Library scan list contains list of subdirectories of library
+    QTimer                 mScanTimer;             //!< Scan timer for periodic scan library for new or deleted objects
+    SdLibraryReferenceMap  mReferenceMap;          //!< Map with key of object id and value is SdLibraryReference
+    mutable QFile          mHeaderFile;            //!< File with header of all objects in library
+    SdAuthorAssocMap       mAuthorAssoc;           //!< Author public hash to author name association
+    SdCompliantDescrList   mCompliantDescrList;    //!< Compliant description list
+    qint32                 mPrivateLastSync;       //!< Time of last sync with private cloud
+    qint32                 mPrivateLastList;       //!< Time of last list from private cloud
+    qint32                 mGlobalLastSync;        //!< Time of last sync with global storage
+    qint32                 mGlobalLastList;        //!< Time of last list from global storage
+    qint32                 mAuthorLastList;        //!< Time of last author list from global storage
     bool                   mDirty;
-    bool                   mNewestMark;        //!< True if need to update newst marks
+    bool                   mNewestMark;            //!< True if need to update newst marks
 
     mutable QReadWriteLock mLock;
 
@@ -175,56 +178,49 @@ class SdLibraryStorage : public QObject
 
 
     //!
-    //! \brief cfIsOlder   Test if object which represents by hashUidName and time present in library and older than there is in library
+    //! \brief isLibraryObjectPresentAndNewer   Test if object which represents by hashUidName and time present in library and older than there is in library
     //! \param hashUidName hashUidName of tested object
     //! \param time        time of locking of tested object
     //! \return            true if tested object present in library and it older then in library
     //!
-    bool               cfIsOlder( const QString hashUidName, qint32 time ) const;
+    bool               isLibraryObjectPresentAndNewer( const QString hashUidName, qint32 time ) const;
 
     //!
-    //! \brief cfIsOlder Overloaded function. Test if object represents by fileUid present in library and older than there is in library
+    //! \brief isLibraryObjectPresentAndNewer Overloaded function. Test if object represents by fileUid present in library and older than there is in library
     //! \param fileUid   Tested object
     //! \return          true if tested object present in library and it older then in library
     //!
-    bool               cfIsOlder( const SdFileUid &fileUid ) const { return cfIsOlder( fileUid.mHashFileUid, fileUid.mCreateTime ); }
+    bool               isLibraryObjectPresentAndNewer( const SdFileUid &fileUid ) const { return isLibraryObjectPresentAndNewer( fileUid.mHashUidName, fileUid.mCreateTime ); }
 
     //!
-    //! \brief cfIsOlder Overloaded function. Test if object represent by item present in library and older than there is in library
+    //! \brief isLibraryObjectPresentAndNewer Overloaded function. Test if object represent by item present in library and older than there is in library
     //! \param item      Tested object
     //! \return          true if tested object present in library and it older then in library
     //!
-    bool               cfIsOlder( const SdContainerFile *item ) const;
+    bool               isLibraryObjectPresentAndNewer( const SdContainerFile *item ) const;
+
 
     //!
-    //! \brief cfIsOlderOrSame Test if object which represents by uid and time present in library and older or same than there is in library
-    //! \param hashUidName     hashUidName of tested object
-    //! \param time            time of locking of tested object
-    //! \return                true if tested object present in library and it older then in library
+    //! \brief isLibraryObjectOlderOrNone   Test if object which represent by hashUidName and time not present in library or newer than in library
+    //! \param hashUidName                  hashUidName of tested object
+    //! \param time                         time of locking of tested object
+    //! \return                             true if object which represent by hashUidName and time not present in library or newer than in library
     //!
-    bool               cfIsOlderOrSame( const QString hashUidName, qint32 time ) const;
+    bool               isLibraryObjectOlderOrNone( const QString hashUidName, qint32 time ) const;
 
     //!
-    //! \brief cfIsOlderOrSame Overloaded function. Test if object present in library and older or same than there is in library
-    //! \param item            Tested object
-    //! \return                true if tested object present in library and it older then in library
+    //! \brief isLibraryObjectOlderOrNone Overloaded function. Test if object is not present in library or fileUid object is newer than in library
+    //! \param fileUid                    Tested object
+    //! \return                           true if object is not present in library or fileUid object is newer than in library
     //!
-    bool               cfIsOlderOrSame( const SdContainerFile *item ) const;
+    bool               isLibraryObjectOlderOrNone( const SdFileUid &fileUid ) const { return isLibraryObjectOlderOrNone( fileUid.mHashUidName, fileUid.mCreateTime ); }
 
     //!
-    //! \brief cfIsNewer   Test if object which represent by hashUidName and time not present in library or newer than in library
-    //! \param hashUidName hashUidName of tested object
-    //! \param time        time of locking of tested object
-    //! \return            true if object which represent by hashUidName and time not present in library or newer than in library
+    //! \brief isLibraryObjectOlderOrNone Overloaded function. Test if object is not present in library or item object is newer than in library
+    //! \param fileUid                    Tested object
+    //! \return                           true if object is not present in library or fileUid object is newer than in library
     //!
-    bool               cfIsNewer( const QString hashUidName, qint32 time ) const;
-
-    //!
-    //! \brief cfIsNewer Overloaded function. Test if object is not present in library or fileUid object is newer than in library
-    //! \param fileUid   Tested object
-    //! \return          true if object is not present in library or fileUid object is newer than in library
-    //!
-    bool               cfIsNewer( const SdFileUid &fileUid ) const { return cfIsNewer( fileUid.mHashUidName, fileUid.mCreateTime ); }
+    bool               isLibraryObjectOlderOrNone( const SdContainerFile *item ) const;
 
     //!
     //! \brief cfObjectContains Return true if object contains in library
@@ -246,7 +242,7 @@ class SdLibraryStorage : public QObject
     //! \param hdr         place to receiv object header
     //! \return            true if header readed successfully
     //!
-    bool             header( const QString hashUidName, SdLibraryHeader &hdr );
+    bool             header( const QString hashUidName, SdLibraryHeader &hdr ) const;
 
 
     //!
@@ -264,6 +260,7 @@ class SdLibraryStorage : public QObject
 
     //==================================================================
     // Author association
+    QString          authorOfObject( const QString &hashUidName ) const;
     //!
     //! \brief authorGlobalName Return author visual name by author public key
     //! \param authorPublicKey  Author public key
@@ -291,6 +288,8 @@ class SdLibraryStorage : public QObject
     //!
     void             periodicScan();
 
+  public slots:
+    void             addObjectCompliant( const SdFileUid &fileUid, const QString &message );
   private:
     //!
     //! \brief objectInsertPrivate Insert object into library. If in library already present newest object
@@ -335,16 +334,19 @@ class SdLibraryStorage : public QObject
     //!
     QString          fullPathOfLibraryObject( const QString &hashUidName ) const;
 
+    bool             isLibraryObjectFilePresent( const SdFileUid &fileUid ) const;
+
+    void             saveDirtyCache();
+
+    bool             resetCache();
     //!
     //! \brief libraryBuildStructure Builds structure of library
     //!
     void             libraryBuildStructure();
 
-    QByteArray       objectGet( const QString &hashUidName ) const;
-
     QByteArray       objectGetFromFile( const QString &fileName ) const;
 
-    void             objectDelete(const QString &hashUidName, qint32 timeCreation , bool isPrivate);
+    void             objectDelete(const SdFileUid &fileUid);
 
     void             objectPut( const QByteArray &content );
 

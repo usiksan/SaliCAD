@@ -493,6 +493,7 @@ HEADERS  += \
     import/vrml/VrmlTypes.h \
     import/vrml/VrmlVector.h \
     library/SdAuthorDescription.h \
+    library/SdCompliantDescr.h \
     library/SdLibraryIndicator.h \
     library/SdLibraryServerDef.h \
     library/SdStringMap.h \

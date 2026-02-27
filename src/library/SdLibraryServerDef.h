@@ -21,15 +21,14 @@
 #define SDRM_TYPE_FAIL               0
 #define SDRM_TYPE_OK                 1 //!< OK Accnowledge
 #define SDRM_TYPE_CHECK              2 //!< Check cloud storage is need to sync object or not
-#define SDRM_TYPE_GET                3 //!<
-#define SDRM_TYPE_REMOVE             4 //!< Remove file from cloud
-#define SDRM_TYPE_OBJECT             5
+#define SDRM_TYPE_GET                3 //!< Need to receiv object
+#define SDRM_TYPE_OBJECT             5 //!< Object data
 #define SDRM_TYPE_GET_LIST           6 //!< Query list of newest files
 #define SDRM_TYPE_LIST               7
 #define SDRM_TYPE_REGISTER           8 //!< Set or change author global name
 #define SDRM_TYPE_INVALID_KEY_PAIR   9 //!< Author public key and author private key not equals recorded in db
 #define SDRM_TYPE_INVALID_NAME      10 //!< Assigned name always used by other author
-#define SDRM_TYPE_COMPLIANT         11
+#define SDRM_TYPE_COMPLIANT_LIST    11
 #define SDRM_TYPE_GET_AUTHOR_LIST   12
 #define SDRM_TYPE_AUTHOR_LIST       13
 

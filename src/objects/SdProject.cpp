@@ -393,8 +393,8 @@ void SdProject::newerCheckAndMark()
   //if it there then mark object with newer uid
   forEach( dctAll, [] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
-    if( item.isValid() && item->mThereNewer != SdLibraryStorage::instance()->cfIsOlder(item.ptr()) ) {
-      item->mThereNewer = SdLibraryStorage::instance()->cfIsOlder(item.ptr());
+    if( item.isValid() && item->mThereNewer != SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(item.ptr()) ) {
+      item->mThereNewer = SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(item.ptr());
       SdPulsar::sdPulsar->emitRenameItem( item.ptr() );
       }
     return true;
@@ -619,7 +619,7 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
   QList<SdProjectItemPtr> upgradeList;
   forEach( dctComponent | dctSymbol | dctPart, [&upgradeList,this] (SdObject *obj) -> bool {
     SdPtr<SdProjectItem> item(obj);
-    if( item.isValid() && SdLibraryStorage::instance()->cfIsOlder(item.ptr()) && !isUsed(obj) ) {
+    if( item.isValid() && SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(item.ptr()) && !isUsed(obj) ) {
       //Object may be upgraded and it is not used
       upgradeList.append( item.ptr() );
       }

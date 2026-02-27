@@ -1258,7 +1258,7 @@ bool SdGraphPartImp::isUsed(SdObject *obj) const
 bool SdGraphPartImp::upgradeProjectItem(SdUndo *undo, QWidget *parent)
   {
   Q_UNUSED(parent)
-  if( SdLibraryStorage::instance()->cfIsOlder(mComponent) || SdLibraryStorage::instance()->cfIsOlder(mPart) ) {
+  if( SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(mComponent) || SdLibraryStorage::instance()->isLibraryObjectPresentAndNewer(mPart) ) {
     //There newer objects. Upgrade.
     if( mSections.count() )
       return false;

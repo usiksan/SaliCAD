@@ -353,6 +353,7 @@ bool SdGraphTracedPolygon::isPointOnNet(SdPoint p, SdPvStratum stratum, QString 
 
 void SdGraphTracedPolygon::accumNetSegments(SdPlateNetContainer *netContainer)
   {
+  Q_UNUSED(netContainer)
 //  if( mRegion.count() )
 //    netContainer->addNetSegment( this, mProp.mNetName.str(), mProp.mStratum, mRegion.at(0), mRegion.at(0) );
   //TODO B049 net segments creation for polygon
@@ -381,6 +382,10 @@ void SdGraphTracedPolygon::drawStratum(SdContext *dcx, SdPvStratum stratum)
 void SdGraphTracedPolygon::accumBarriers(SdBarrierList &dest, SdPvStratum stratum, SdRuleId toWhich, const SdRuleBlock &blk) const
   {
   //TODO B048 barriars creation for polygon
+  Q_UNUSED(dest)
+  Q_UNUSED(stratum)
+  Q_UNUSED(toWhich)
+  Q_UNUSED(blk)
   }
 
 

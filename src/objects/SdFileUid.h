@@ -34,13 +34,22 @@ struct SdFileUid
 
     //!
     //! \brief fromFileUid Parses a file UID string and extracts hash and timestamp components
-    //! \param fileUid     The file UID string to parse (expected format: 53-char-hash + "-" + 8-char-hex-timestamp + ".sdb")
+    //! \param fileUid     The file UID string to parse (expected format: 27-char-hash + "-" + 8-char-hex-timestamp + ".sdb")
     //! \return            True if parsing succeeded, false if format is invalid
     //!
     bool    fromFileUid( const QString &fileUid )
       {
-      if( fileUid.size() != (SD_HASH_UID_NAME_LEN + 9 + SD_BINARY_EXTENSION_LENGTH) || !fileUid.endsWith(SD_BINARY_EXTENSION) || fileUid.at(53) != QChar('-') )
-        return false;
+      //Testing path is correct
+      if( fileUid.contains( QChar('.') ) ) {
+        //File name with extension
+        if( fileUid.size() != (SD_HASH_UID_NAME_LEN + 9 + SD_BINARY_EXTENSION_LENGTH) || !fileUid.endsWith(SD_BINARY_EXTENSION) || fileUid.at(SD_HASH_UID_NAME_LEN) != QChar('-') )
+          return false;
+        }
+      else {
+        //File name without extension
+        if( fileUid.size() != (SD_HASH_UID_NAME_LEN + 9) || fileUid.at(SD_HASH_UID_NAME_LEN) != QChar('-') )
+          return false;
+        }
       mHashUidName = fileUid.mid( 0, SD_HASH_UID_NAME_LEN );
       mCreateTime  = fileUid.mid( SD_HASH_UID_NAME_LEN + 1, 8 ).toInt( nullptr, 16 );
       return true;

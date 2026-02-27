@@ -46,7 +46,7 @@ void SdDMasterPartModule::changeEvent(QEvent *e)
 
 void SdDMasterPartModule::drawPart(SdIllustrator &il)
   {
-
+  Q_UNUSED(il)
   }
 
 void SdDMasterPartModule::accept()
