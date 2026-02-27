@@ -33,18 +33,14 @@ class SdDRegistation : public QDialog
     explicit SdDRegistation( bool fromHelp = true, QWidget *parent = nullptr);
     ~SdDRegistation();
 
-  signals:
-    //Signal to start registration
-    void doRegistration( const QString repo, const QString authorName, const QString password, const QString email );
-
   public slots:
     //Registration new user
     void cmRegistration();
 
-    //!
-    //! \brief cmGeneratePassword Generate new password
-    //!
-    void cmGeneratePassword();
+
+    void cmGeneratePrivateKey();
+
+    void cmGetStatus();
 
     //On edit user name
     void onEditAuthorName( const QString nm );
@@ -55,7 +51,9 @@ class SdDRegistation : public QDialog
   private:
     Ui::SdDRegistation *ui;
 
-    static QString generatePrivateKey();
+    static void performRegistration( SdDRegistation *reg );
+
+    static void performGetStatus( SdDRegistation *reg );
   };
 
 #endif // SDDREGISTATION_H

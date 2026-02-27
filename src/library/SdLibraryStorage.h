@@ -270,7 +270,11 @@ class SdLibraryStorage : public QObject
 
     QString          authorGlobalNameWithRank( const QString &authorPublicKey ) const;
 
+    bool             authorGlobalNamePresent( const QString &authorName ) const;
+
     static QString   authorPrivateKeyNew();
+
+    static QString   authorPrivateKey();
 
     static QString   authorPublicKey();
 

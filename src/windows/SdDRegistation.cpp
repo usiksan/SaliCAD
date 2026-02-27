@@ -19,11 +19,16 @@ Description
 #include "ui_SdDRegistation.h"
 #include "SdDHelp.h"
 #include "library/SdLibraryStorage.h"
+#include "library/SdTcpCborClient.h"
 
 #include <QSettings>
 #include <QMessageBox>
-#include <QRandomGenerator64>
 #include <QTimer>
+#include <QRegularExpressionValidator>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QCborMap>
+
+
 
 SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   QDialog(parent),
@@ -32,47 +37,37 @@ SdDRegistation::SdDRegistation(bool fromHelp, QWidget *parent) :
   ui(new Ui::SdDRegistation)
   {
   ui->setupUi(this);
-/*
+
   //Fill fields
   QSettings s;
   //Check and setup default values
-  if( s.value( QStringLiteral(SDK_SERVER_REPO) ).toString().isEmpty() )
-    s.setValue( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO) );
+  if( s.value( QStringLiteral(SDK_GLOBAL_STORAGE_IP) ).toString().isEmpty() )
+    s.setValue( QStringLiteral(SDK_GLOBAL_STORAGE_IP), QString(SD_DEFAULT_GLOBAL_STORAGE_IP) );
 
-  if( s.value( QStringLiteral(SDK_PRIVATE_KEY) ).toString().isEmpty() )
-    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), generatePrivateKey() );
+  // Регулярное выражение для IP4
+  QRegularExpression regex(
+      "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}"
+      "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+  );
 
-  ui->mServerRepo->setText( s.value( QStringLiteral(SDK_SERVER_REPO), QString(SD_DEFAULT_REPO)).toString() );
-  //ui->mName->setText( s.value( QStringLiteral(SDK_GLOBAL_AUTHOR), QString()).toString() );
-  onEditAuthorName( ui->mName->text() );
-  ui->mPassword->setText( s.value( QStringLiteral(SDK_PRIVATE_KEY), QString()).toString() );
+  ui->mServer->setText( s.value( QStringLiteral(SDK_GLOBAL_STORAGE_IP) ).toString() );
+  ui->mServer->setInputMask( "999.999.999.999;#" );
+  ui->mServer->setValidator( new QRegularExpressionValidator(regex, ui->mServer ) );
 
+  ui->mPrivateKey->setText( SdLibraryStorage::authorPrivateKey() );
+
+  connect( ui->mGetStatus, &QPushButton::clicked, this, &SdDRegistation::cmGetStatus );
   connect( ui->mRegistration, &QPushButton::clicked, this, &SdDRegistation::cmRegistration );
-  connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePassword );
+  connect( ui->mGeneratePassword, &QPushButton::clicked, this, &SdDRegistation::cmGeneratePrivateKey );
   connect( ui->mClose, &QPushButton::clicked, this, &SdDRegistation::cmClose );
-  connect( ui->mName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
-*/
-//  connect( this, &SdDRegistation::doRegistration, SdObjectNetClient::instance(), &SdObjectNetClient::doRegister );
+  connect( ui->mPublicName, &QLineEdit::textEdited, this, &SdDRegistation::onEditAuthorName );
+
   connect( ui->mHelp, &QPushButton::clicked, this, [this] () {
     SdDHelp::help( QString("SdDRegistration.htm"), this );
     } );
 
   //Check registration status at start
-//  connect( SdObjectNetClient::instance(), &SdObjectNetClient::registerStatus, this, [this] ( int success, const QString msg, const QString email ) {
-//    ui->mRegistrationStatus->setText(msg);
-//    if( !email.isEmpty() )
-//      ui->mEmail->setText( email );
-//    });
-
-  // if( s.contains(SDK_GLOBAL_AUTHOR) && s.contains(SDK_GLOBAL_PASSWORD) && s.contains(SDK_SERVER_REPO) ) {
-  //   ui->mEmail->setText( QStringLiteral("email") );
-  //   QTimer::singleShot( 300, this, &SdDRegistation::cmRegistration );
-  //   }
-  // else {
-  //   ui->mRegistrationStatus->setText( tr("Not registered!") );
-  //   ui->mAutomaticUpload->setChecked( false );
-  //   ui->mAutomaticUpload->setEnabled( false );
-  //   }
+  QTimer::singleShot( 300, this, &SdDRegistation::cmGetStatus );
   }
 
 
@@ -87,45 +82,74 @@ SdDRegistation::~SdDRegistation()
 //Registration new user
 void SdDRegistation::cmRegistration()
   {
-  /*
-  if( ui->mServerRepo->text().isEmpty() ) {
+  if( ui->mServer->text().isEmpty() ) {
     QMessageBox::warning( this, tr("Warning!"), tr("Enter repository server") );
     return;
     }
-  if( ui->mName->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter user name") );
+  if( ui->mPublicName->text().isEmpty() ) {
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter public author name") );
     return;
     }
   if( ui->mEmail->text().isEmpty() ) {
-    QMessageBox::warning( this, tr("Warning!"), tr("Enter your email needed to resore key at later") );
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter your email needed to restore key at later") );
     return;
     }
-  if( ui->mPassword->text().isEmpty() )
+  if( ui->mPrivateKey->text().isEmpty() )
     //Check access to existing user
     QMessageBox::warning( this, tr("Warning!"), tr("Enter private key for your account") );
   else {
     //Store registration data
     QSettings s;
-    s.setValue( QStringLiteral(SDK_SERVER_REPO), ui->mServerRepo->text() );
-    //s.setValue( QStringLiteral(SDK_GLOBAL_AUTHOR), ui->mName->text() );
-    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), ui->mPassword->text() );
+    s.setValue( QStringLiteral(SDK_GLOBAL_STORAGE_IP), ui->mServer->text() );
+    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), ui->mPrivateKey->text() );
 
-    //Registration new user
-    emit doRegistration( ui->mServerRepo->text(), ui->mName->text().toLower(), ui->mPassword->text(), ui->mEmail->text() );
+    ui->mRegistrationStatus->setText( tr("Query server...") );
+    //Perform sync with remote storage
+    auto f = QtConcurrent::run( SdDRegistation::performRegistration, this );
     }
-    */
+
   }
 
 
 
-
-//!
-//! \brief cmGeneratePassword Generate new password
-//!
-void SdDRegistation::cmGeneratePassword()
+void SdDRegistation::cmGeneratePrivateKey()
   {
-  ui->mPrivateKey->setText( SdLibraryStorage::authorPrivateKeyNew() );
+  //Set new private key
+  QString privateKey = SdLibraryStorage::authorPrivateKeyNew();
+  QSettings s;
+  s.setValue( SDK_PRIVATE_KEY, privateKey );
+  ui->mPrivateKey->setText( privateKey );
+
+  //Clear all other fields
+  ui->mEmail->clear();
+  ui->mPublicName->clear();
   }
+
+
+
+
+void SdDRegistation::cmGetStatus()
+  {
+  if( ui->mServer->text().isEmpty() ) {
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter repository server") );
+    return;
+    }
+  if( ui->mPrivateKey->text().isEmpty() )
+    //Check access to existing user
+    QMessageBox::warning( this, tr("Warning!"), tr("Enter private key for your account") );
+  else {
+    //Store registration data
+    QSettings s;
+    s.setValue( QStringLiteral(SDK_GLOBAL_STORAGE_IP), ui->mServer->text() );
+    s.setValue( QStringLiteral(SDK_PRIVATE_KEY), ui->mPrivateKey->text() );
+
+    ui->mRegistrationStatus->setText( tr("Query server...") );
+    //Perform sync with remote storage
+    auto f = QtConcurrent::run( SdDRegistation::performGetStatus, this );
+    }
+  }
+
+
 
 
 
@@ -178,6 +202,73 @@ void SdDRegistation::cmClose()
   //   }
   // s.setValue( QStringLiteral(SDK_UPLOAD_AUTO), ui->mAutomaticUpload->isChecked() );
   done(1);
+  }
+
+
+
+void SdDRegistation::performRegistration(SdDRegistation *reg)
+  {
+  QSettings s;
+  try {
+    SdTcpCborClient client;
+    client.openSocket( s.value(SDK_GLOBAL_STORAGE_IP, SD_DEFAULT_GLOBAL_STORAGE_IP).toString(), SD_GLOBAL_STORAGE_PORT );
+
+    //Prepare registration query
+    QCborMap map;
+    map[SDRM_TYPE]               = SDRM_TYPE_REGISTER;
+    map[SDRM_AUTHOR_PUBLIC_KEY]  = SdLibraryStorage::authorPublicKey();
+    map[SDRM_AUTHOR_PRIVATE_KEY] = SdLibraryStorage::authorPrivateKey();
+    map[SDRM_AUTHOR_NAME]        = reg->ui->mPublicName->text();
+    map[SDRM_AUTHOR_EMAIL]       = reg->ui->mEmail->text();
+
+    map = client.transferMap( map );
+
+    if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_INVALID_KEY_PAIR )
+      reg->ui->mRegistrationStatus->setText( tr("Author public key and author private key not equals recorded in db.") );
+    else if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_INVALID_NAME )
+      reg->ui->mRegistrationStatus->setText( tr("Assigned name always used by other author.") );
+    else if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_OK )
+      reg->ui->mRegistrationStatus->setText( tr("Registration successfull.") );
+    else
+      reg->ui->mRegistrationStatus->setText( tr("Registration fail. Try later.") );
+    }
+  catch(const std::exception& e) {
+    qDebug() << "Error occured" << e.what();
+    reg->ui->mRegistrationStatus->setText( e.what() );
+    }
+  }
+
+
+
+
+void SdDRegistation::performGetStatus(SdDRegistation *reg)
+  {
+  QSettings s;
+  try {
+    SdTcpCborClient client;
+    client.openSocket( s.value(SDK_GLOBAL_STORAGE_IP, SD_DEFAULT_GLOBAL_STORAGE_IP).toString(), SD_GLOBAL_STORAGE_PORT );
+
+    //Prepare registration query
+    QCborMap map;
+    map[SDRM_TYPE]               = SDRM_TYPE_REGISTER_GET;
+    map[SDRM_AUTHOR_PUBLIC_KEY]  = SdLibraryStorage::authorPublicKey();
+    map[SDRM_AUTHOR_PRIVATE_KEY] = SdLibraryStorage::authorPrivateKey();
+    map = client.transferMap( map );
+
+    if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_OK ) {
+      reg->ui->mRegistrationStatus->setText( tr("Registered.") );
+      reg->ui->mEmail->setText( map[SDRM_AUTHOR_EMAIL].toString() );
+      reg->ui->mPublicName->setText( map[SDRM_AUTHOR_NAME].toString() );
+      }
+    else if( map[SDRM_TYPE].toInteger() == SDRM_TYPE_FAIL )
+      reg->ui->mRegistrationStatus->setText( tr("Not registered.") );
+    else
+      reg->ui->mRegistrationStatus->setText( tr("Registration status fail. Try later.") );
+    }
+  catch(const std::exception& e) {
+    qDebug() << "Error occured" << e.what();
+    reg->ui->mRegistrationStatus->setText( e.what() );
+    }
   }
 
 

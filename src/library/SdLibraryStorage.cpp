@@ -464,10 +464,34 @@ QString SdLibraryStorage::authorGlobalNameWithRank(const QString &authorPublicKe
 
 
 
+bool SdLibraryStorage::authorGlobalNamePresent(const QString &authorName) const
+  {
+  for( auto it = mAuthorAssoc.constBegin(); it != mAuthorAssoc.constEnd(); it++ ) {
+    if( it->authorName().toLower() == authorName.toLower() ) return true;
+    }
+  return false;
+  }
+
+
+
 
 QString SdLibraryStorage::authorPrivateKeyNew()
   {
   return QStringLiteral("SlxUser-") + QUuid::createUuid().toString( QUuid::WithoutBraces );
+  }
+
+
+
+QString SdLibraryStorage::authorPrivateKey()
+  {
+  QSettings s;
+
+  if( !s.contains(SDK_PRIVATE_KEY) ) {
+    //Author not assigned yet
+    s.setValue( SDK_PRIVATE_KEY, authorPrivateKeyNew() );
+    }
+
+  return s.value( SDK_PRIVATE_KEY ).toString();
   }
 
 

@@ -99,6 +99,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="mGetStatus">
+       <property name="text">
+        <string>Get status</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="mRegistration">
        <property name="text">
         <string>Registration</string>
