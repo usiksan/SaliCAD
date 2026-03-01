@@ -30,8 +30,9 @@ class SdUndoRecordProjectItem : public SdUndoRecord
     SdFileUid     *mFileUidSrc;
     bool           mEditEnable;
     bool          *mEditEnableSrc;
+    bool          *mPublicSrc;
   public:
-    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
+    SdUndoRecordProjectItem( SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable, bool *publicSrc );
 
     //Undo elementary operation.
     virtual void    undo() override;

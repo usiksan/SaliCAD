@@ -183,10 +183,10 @@ void SdWEditorComponent::onActivateEditor()
   //Activate menu
   SdWCommand::cmObjectEditEnable->setVisible( !mComponent->isEditEnable() );
   SdWCommand::cmObjectEditDisable->setVisible( mComponent->isEditEnable() );
-
-  //Update info from component
-//  fillSections();
-//  fillPart();
+  if( getProjectItem() && (!getProjectItem()->isAnotherAuthor() || (getProjectItem()->isAnotherAuthor() && getProjectItem()->isPublic())) ) {
+    SdWCommand::cmObjectPublic->setVisible(true);
+    SdWCommand::cmObjectPublic->setChecked( mComponent != nullptr && mComponent->isPublic() );
+    }
   }
 
 

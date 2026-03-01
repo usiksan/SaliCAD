@@ -46,6 +46,8 @@ QString SdProjectItem::getToolTip() const
   if( !isEditEnable() ) {
     if( mThereNewer )
       return QObject::tr("There new object. Use upgrade menu. '%1'").arg( getExtendTitle() );
+    if( isPublic() )
+      return QObject::tr("Object locked and public. Unlock to edit. '%1'").arg( getExtendTitle() );
     return QObject::tr("Object locked. Unlock to edit. '%1'").arg( getExtendTitle() );
     }
   return getExtendTitle();
@@ -119,9 +121,10 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
   if( mEditEnable ) {
     if( !edit ) {
       //Disable edit.
-      undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable );
+      undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable, &mIsPublic );
 
       mEditEnable = edit;
+      mIsPublic   = false;
       //Update object version and author creation
       updateAuthorAndHash();
       updateCreationTime();
@@ -131,8 +134,7 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
       //getProject()->upgradeProjectItem( this, undo );
       }
     //For each open projects perform check and mark newer objects
-    for( auto iter = sdProjectList.cbegin(); iter != sdProjectList.cend(); iter++ )
-      (*iter)->newerCheckAndMark();
+    SdProject::projectListNewerCheckAndMark();
     }
   else {
     if( edit ) {
@@ -145,17 +147,34 @@ SdProjectItem *SdProjectItem::setEditEnable( bool edit, const QString undoTitle 
         item->updateAuthorAndHash();
         item->updateCreationTime();
         item->mEditEnable = true;
+        item->mIsPublic   = false;
         //Insert item to project
         getProject()->insertChild( item, undo );
         return item;
         }
       mEditEnable = edit;
+      mIsPublic   = false;
       updateCreationTime();
       }
     }
   //To update time send signal
   SdPulsar::sdPulsar->emitRenameItem( this );
   return this;
+  }
+
+
+
+
+
+void SdProjectItem::publicSet()
+  {
+  SdContainerFile::publicSet();
+  if( isPublic() ) {
+    //For each open projects perform check and mark newer objects
+    SdProject::projectListNewerCheckAndMark();
+
+    SdPulsar::sdPulsar->emitRenameItem( this );
+    }
   }
 
 

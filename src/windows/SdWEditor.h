@@ -82,6 +82,7 @@ class SdWEditor : public QAbstractScrollArea
     //Object menu commands
     virtual void cmObjectEditEnable();
     virtual void cmObjectEditDisable();
+    virtual void cmObjectPublic();
 
     //Edit menu commands
     virtual void cmEditUndo() {}

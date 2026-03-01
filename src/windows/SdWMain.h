@@ -144,6 +144,7 @@ class SdWMain : public QMainWindow
     void cmObjectParam();
     void cmObjectEditEnable();
     void cmObjectEditDisable();
+    void cmObjectPublic();
     void cmProjectParam();
     void cmProjectUpgrade();
 

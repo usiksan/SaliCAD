@@ -112,9 +112,9 @@ void SdUndo::begin(QString title, SdProjectItem *item, bool is3d)
 
 
 
-void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable)
+void SdUndo::projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable, bool *publicSrc)
   {
-  addUndo( new SdUndoRecordProjectItem( item, title, author, fileUid, editEnable ) );
+  addUndo( new SdUndoRecordProjectItem( item, title, author, fileUid, editEnable, publicSrc ) );
   }
 
 

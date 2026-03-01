@@ -111,6 +111,7 @@ class SdWCommand
     static QActionPtr   cmObjectParam;
     static QActionPtr   cmObjectEditEnable;
     static QActionPtr   cmObjectEditDisable;
+    static QActionPtr   cmObjectPublic;
     static QActionPtr   cmProjectParam;
     static QActionPtr   cmProjectUpgrade;
 

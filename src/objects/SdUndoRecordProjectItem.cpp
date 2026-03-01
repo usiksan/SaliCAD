@@ -14,7 +14,7 @@ Description
 #include "SdUtil.h"
 #include "SdPulsar.h"
 
-SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable) :
+SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable, bool *publicSrc) :
   SdUndoRecord(),
   mItem(item),
   mTitle(*title),
@@ -24,7 +24,8 @@ SdUndoRecordProjectItem::SdUndoRecordProjectItem(SdProjectItem *item, QString *t
   mFileUid(*fileUid),
   mFileUidSrc(fileUid),
   mEditEnable(*editEnable),
-  mEditEnableSrc(editEnable)
+  mEditEnableSrc(editEnable),
+  mPublicSrc(publicSrc)
   {
 
   }
@@ -42,5 +43,6 @@ void SdUndoRecordProjectItem::undo()
   mAuthorSrc->swap( mAuthor );
   mFileUidSrc->swap( mFileUid );
   SdUtil::swap( mEditEnable, mEditEnableSrc );
+  *mPublicSrc = false;
   }
 

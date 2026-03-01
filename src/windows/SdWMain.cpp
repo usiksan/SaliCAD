@@ -1092,6 +1092,19 @@ void SdWMain::cmObjectEditDisable()
 
 
 
+void SdWMain::cmObjectPublic()
+  {
+  if( SdWCommand::cmObjectPublic->isChecked() ) {
+    if( activeEditor() )
+      activeEditor()->cmObjectPublic();
+    }
+  else
+    SdWCommand::cmObjectPublic->setChecked(true);
+  }
+
+
+
+
 
 
 void SdWMain::cmProjectParam()

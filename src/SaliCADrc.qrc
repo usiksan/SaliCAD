@@ -793,5 +793,6 @@
         <file>pic/iconLocalLibrary.png</file>
         <file>pic/iconGlobalStorage.png</file>
         <file>pic/iconPrivateCloud.png</file>
+        <file>pic/objectPublic.png</file>
     </qresource>
 </RCC>

@@ -111,6 +111,10 @@ void SdWEditorGraphView::onActivateEditor()
 
   //Activate menu
   SdWCommand::cmObjectEditEnable->setVisible(true);
+  if( getProjectItem() && (!getProjectItem()->isAnotherAuthor() || (getProjectItem()->isAnotherAuthor() && getProjectItem()->isPublic())) ) {
+    SdWCommand::cmObjectPublic->setVisible(true);
+    SdWCommand::cmObjectPublic->setChecked( mItem != nullptr && mItem->isPublic() );
+    }
 
   //Activate tool bar
   SdWCommand::barView->show();

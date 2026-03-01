@@ -51,6 +51,12 @@ class SdProjectItem : public SdContainerFile
     void                   setUnicalTitle( const QString undoTitle );
     //Set editEnable flag. When needed - creation new object perhaps
     SdProjectItem         *setEditEnable(bool edit , const QString undoTitle);
+
+    //!
+    //! \brief publicSet Mark object as public
+    //!
+    virtual void           publicSet() override;
+
     //Get over rect
     SdRect                 getOverRect( quint64 classMask = dctAll );
 

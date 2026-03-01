@@ -97,6 +97,8 @@ void SdWCommand::createMenu(SdWMain *frame)
   cmObjectSort        = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectSort.png")), QObject::tr("Sort"), frame, &SdWMain::cmObjectSort );
   cmObjectEditEnable  = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectEditEnable.png")), QObject::tr("Enable edit"), frame, &SdWMain::cmObjectEditEnable );
   cmObjectEditDisable = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectEditDisable.png")), QObject::tr("Finish edit"), frame, &SdWMain::cmObjectEditDisable );
+  cmObjectPublic      = menuObject->addAction( QIcon(QStringLiteral(":/pic/objectPublic.png")), QObject::tr("Make an object public"), frame, &SdWMain::cmObjectPublic );
+  cmObjectPublic->setCheckable(true);
   cmProjectParam      = menuObject->addAction( QIcon(QStringLiteral(":/pic/editProjectParam.png")), QObject::tr("Edit project param..."), frame, &SdWMain::cmProjectParam );
   cmProjectUpgrade    = menuObject->addAction( QIcon(QStringLiteral(":/pic/editProjectUpgrade.png")), QObject::tr("Upgrade with new versions"), frame, &SdWMain::cmProjectUpgrade );
 
@@ -547,6 +549,7 @@ void SdWCommand::createToolBars(SdWMain *frame)
   barMain->insertAction( nullptr, cmObjectNew );
   barMain->insertAction( nullptr, cmObjectEditEnable );
   barMain->insertAction( nullptr, cmObjectEditDisable );
+  barMain->insertAction( nullptr, cmObjectPublic );
   barMain->insertAction( nullptr, cmEditUndo );
   barMain->insertAction( nullptr, cmEditRedo );
 
@@ -773,6 +776,7 @@ void SdWCommand::hideEditorContext()
   cmMenuInsertSymbol->setVisible(false);
   cmObjectEditEnable->setVisible(false);
   cmObjectEditDisable->setVisible(false);
+  cmObjectPublic->setVisible(false);
   cmMenuRules->setVisible(false);
 
   //Погасить все редакторо-зависимые toolBars
@@ -838,6 +842,7 @@ QActionPtr SdWCommand::cmObjectSort;
 QActionPtr SdWCommand::cmObjectParam;
 QActionPtr SdWCommand::cmObjectEditEnable;
 QActionPtr SdWCommand::cmObjectEditDisable;
+QActionPtr SdWCommand::cmObjectPublic;
 QActionPtr SdWCommand::cmProjectParam;
 QActionPtr SdWCommand::cmProjectUpgrade;
 

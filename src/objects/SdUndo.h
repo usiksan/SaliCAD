@@ -114,7 +114,7 @@ class SdUndo
     //!
     void begin( QString title, SdProjectItem *item, bool is3d );
 
-    void projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable );
+    void projectItemInfo(SdProjectItem *item, QString *title, QString *author, SdFileUid *fileUid, bool *editEnable, bool *publicSrc );
 
     void stringMapItem( SdStringMap *assoc, const QString key );
 

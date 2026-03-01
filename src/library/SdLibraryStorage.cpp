@@ -637,6 +637,7 @@ void SdLibraryStorage::periodicScan()
           //Was error
           SdLibraryIndicator::instance()->setPrivateCloud( 0, 0, SdLibraryIndicator::SdLisError, mCloudError );
 
+        saveDirtyCache();
         mScanTimer.start( 30000 );
         });
 
@@ -730,8 +731,14 @@ void SdLibraryStorage::insertReferenceAndHeader(const SdContainerFile *item, boo
       //write header first
       ref.mHeaderPtr     = fileHdr.size();
       ref.mCreationTime  = hdr.mFileUid.mCreateTime;
-      if( hdr.isPublic() )
-        ref.mInsertionTimePublic = SvTime2x::current();
+      if( hdr.isPublic() ) {
+        //If previous status is not publis, so we change public status
+        if( !ref.isPublic() )
+          //For change status both insertion times must be same
+          ref.mInsertionTimePublic = ref.mInsertionTimePrivate = SvTime2x::current();
+        else
+          ref.mInsertionTimePublic = SvTime2x::current();
+        }
       else
         ref.mInsertionTimePrivate = SvTime2x::current();
       //Only for owner objects we allow uploading to server
@@ -1001,7 +1008,6 @@ void SdLibraryStorage::objectPut(const QByteArray &content)
 
 QCborMap SdLibraryStorage::prepareQuery(int queryType, const SdFileUid &uid, bool appendObject) const
   {
-  QReadLocker locker( &mLock );
   QCborMap map;
   map[SDRM_TYPE]              = queryType;
   map[SDRM_CLOUD_ID]          = privateCloudName();
@@ -1042,19 +1048,77 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
   //sync to the cloud, and download changes since the last sync from the cloud.
   QSettings s;
   QList<SdFileUid> fileListForChange;
-  qint32 curSync = SvTime2x::current();
-  qint32 lastSync = storage->mPrivateLastSync;
-  //First, collect objects that have changed since the last synchronization.
-  //This includes newly inserted, updated, and deleted objects. Objects that
-  //have been made public are also treated as deleted. Consider only private objects.
-  storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( !ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTimePrivate > lastSync )
-      fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
-    });
 
   try {
     SdTcpCborClient client;
     client.openSocket(s.value(SDK_PRIVATE_CLOUD_IP, SD_DEFAULT_PRIVATE_CLOUD_IP).toString(), SD_PRIVATE_CLOUD_PORT );
+
+
+    //At first, we retrieve the list of server updates performed after the last synchronization.
+    //This list will also include the objects uploaded in the previous step.
+    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, storage->mPrivateLastList ) );
+
+    if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
+      QCborArray ar = listMap[SDRM_LIST].toArray();
+      if( !ar.isEmpty() ) {
+        fileListForChange.clear();
+        SdFileUid uid;
+        //For each item in the list, check if the object in the cloud
+        //is newer than our local copy. If it is, request the object itself.
+        for( auto const &val : ar ) {
+          if( uid.fromFileUid(val.toString()) )
+            fileListForChange.append( uid );
+          }
+
+        if( !fileListForChange.isEmpty() ) {
+          //Perform sync for each object
+          for( const auto &fileUid : std::as_const(fileListForChange) ) {
+            //Check if we need break operation
+            if( storage->mPause ) return;
+
+            if( storage->isLibraryObjectOlderOrNone( fileUid ) ) {
+              QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid, false ) );
+              if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OBJECT ) {
+                //Object received. An empty object indicates that the object has been deleted.
+                QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
+                if( fileContent.isEmpty() ) {
+                  //Delete from library
+                  storage->objectDelete( fileUid );
+                  }
+                else {
+                  storage->objectPut( fileContent );
+                  storage->mIterCloudTransferIn++;
+                  }
+                }
+              else return;
+              }
+            }
+          }
+        //Update last list time
+        storage->mPrivateLastList = listMap[SDRM_CREATE_TIME].toInteger();
+        storage->mDirty = true;
+        }
+      else {
+        if( listMap[SDRM_CREATE_TIME].toInteger() == 0 ) {
+          //Signal that private cloud is not exist and we must start from begin
+          storage->mPrivateLastSync = storage->mPrivateLastList = 0;
+          storage->mDirty = true;
+          }
+        }
+      }
+
+
+
+    qint32 curSync = SvTime2x::current();
+    qint32 lastSync = storage->mPrivateLastSync;
+    fileListForChange.clear();
+    //At now, collect objects that have changed since the last synchronization.
+    //This includes newly inserted, updated, and deleted objects. Objects that
+    //have been made public are also treated as deleted. Consider only private objects.
+    storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
+      if( ref.isLocalChanged() && ref.mInsertionTimePrivate > lastSync )
+        fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
+      });
 
     if( !fileListForChange.isEmpty() ) {
       //Now, sequentially query each object to check if an actual transfer is needed.
@@ -1093,49 +1157,6 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
       }
 
 
-    //Now, retrieve the list of server updates performed after the last synchronization.
-    //This list will also include the objects uploaded in the previous step.
-    QCborMap listMap = client.transferMap( prepareQueryList( SDRM_TYPE_GET_LIST, storage->mPrivateLastList ) );
-
-    if( listMap[SDRM_TYPE].toInteger() == SDRM_TYPE_LIST ) {
-      QCborArray ar = listMap[SDRM_LIST].toArray();
-      fileListForChange.clear();
-      SdFileUid uid;
-      //For each item in the list, check if the object in the cloud
-      //is newer than our local copy. If it is, request the object itself.
-      for( auto const &val : ar ) {
-        if( uid.fromFileUid(val.toString()) )
-          fileListForChange.append( uid );
-        }
-
-      if( !fileListForChange.isEmpty() ) {
-        //Perform sync for each object
-        for( const auto &fileUid : std::as_const(fileListForChange) ) {
-          //Check if we need break operation
-          if( storage->mPause ) return;
-
-          if( storage->isLibraryObjectOlderOrNone( fileUid ) ) {
-            QCborMap res = client.transferMap( storage->prepareQuery( SDRM_TYPE_GET, fileUid, false ) );
-            if( res[SDRM_TYPE].toInteger() == SDRM_TYPE_OBJECT ) {
-              //Object received. An empty object indicates that the object has been deleted.
-              QByteArray fileContent = res[SDRM_CONTENT].toByteArray();
-              if( fileContent.isEmpty() ) {
-                //Delete from library
-                storage->objectDelete( fileUid );
-                }
-              else {
-                storage->objectPut( fileContent );
-                storage->mIterCloudTransferIn++;
-                }
-              }
-            else return;
-            }
-          }
-        }
-      //Update last list time
-      storage->mPrivateLastList = listMap[SDRM_CREATE_TIME].toInteger();
-      storage->mDirty = true;
-      }
     }
   catch(const std::exception& e) {
     qDebug() << "Error occured" << e.what();
@@ -1148,17 +1169,18 @@ void SdLibraryStorage::remoteSync(SdLibraryStorage *storage)
 
   //Now perform synchronization with the public cloud. It is done exactly the
   //same as with the private cloud, except that public objects are collected.
-  fileListForChange.clear();
-  curSync = SvTime2x::current();
-  lastSync = storage->mGlobalLastSync;
-  storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
-    if( ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTimePublic > lastSync )
-      fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
-    });
 
   try {
     SdTcpCborClient client;
     client.openSocket( s.value(SDK_GLOBAL_STORAGE_IP, SD_DEFAULT_GLOBAL_STORAGE_IP).toString(), SD_GLOBAL_STORAGE_PORT );
+
+    fileListForChange.clear();
+    qint32 curSync = SvTime2x::current();
+    qint32 lastSync = storage->mGlobalLastSync;
+    storage->forEachReference( [lastSync,&fileListForChange] (const QString &hashUidName, const SdLibraryReference &ref) {
+      if( ref.isPublic() && ref.isLocalChanged() && ref.mInsertionTimePublic > lastSync )
+        fileListForChange.append( SdFileUid( hashUidName, ref.mCreationTime ) );
+      });
 
     if( !fileListForChange.isEmpty() ) {
       //Perform sync for each object

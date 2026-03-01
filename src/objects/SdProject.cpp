@@ -647,6 +647,15 @@ bool SdProject::upgradeNewerItems(SdUndo *undo, QWidget *parent)
 
 
 
+void SdProject::projectListNewerCheckAndMark()
+  {
+  for( auto iter = sdProjectList.cbegin(); iter != sdProjectList.cend(); iter++ )
+    (*iter)->newerCheckAndMark();
+  }
+
+
+
+
 
 
 

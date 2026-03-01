@@ -44,7 +44,7 @@ QString SdContainerFile::getUidName() const
 
 QString SdContainerFile::getExtendTitle() const
   {
-  return QString("%1 [r%2] (%3)").arg( mTitle, SvTime2x::toLocalString(getTime()), authorGlobalName( mAuthorKey ) );
+  return QString("%1 [%4%2] (%3)").arg( mTitle, SvTime2x::toLocalString(getTime()), authorGlobalName( mAuthorKey ), isPublic() ? QString("🌐") : QString("") );
   }
 
 
@@ -86,6 +86,24 @@ void SdContainerFile::titleSet(const QString title)
   updateCreationTime();
   //Item author (registered program copy name)
   updateAuthorAndHash();
+  }
+
+
+
+
+//!
+//! \brief publicSet Mark object as public
+//!
+void SdContainerFile::publicSet()
+  {
+  if( !isAnotherAuthor() ) {
+    //Public mark enabled only for author
+    mIsPublic = true;
+    //Update creation time
+    updateCreationTime();
+    //Write object to local library
+    SdLibraryStorage::instance()->cfObjectInsert( this );
+    }
   }
 
 

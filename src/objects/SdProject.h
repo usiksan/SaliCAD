@@ -168,6 +168,7 @@ class SdProject : public SdContainerFile
     //Upgrade newer objects
     virtual bool      upgradeNewerItems( SdUndo *undo, QWidget *parent );
 
+    static void       projectListNewerCheckAndMark();
   private:
     //Test if net name already used
     bool              isNetNameUsed( const QString netName );

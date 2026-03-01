@@ -162,6 +162,23 @@ void SdWEditor::cmObjectEditDisable()
 
 
 
+void SdWEditor::cmObjectPublic()
+  {
+  if( getProjectItem() && !getProjectItem()->isPublic() ) {
+    if( getProjectItem()->isAnotherAuthor() )
+      QMessageBox::warning( this, tr("Error"), tr("You can made public only your own objects, but this object of another author") );
+    else {
+      //Conditions are true, change public
+      getProjectItem()->publicSet();
+
+      }
+    }
+  }
+
+
+
+
+
 
 ////Show dialog with error msg
 //QMessageBox::StandardButton SdWEditor::msgError(QString msg, QMessageBox::StandardButton buttons)

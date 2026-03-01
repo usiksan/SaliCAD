@@ -61,6 +61,11 @@ class SdContainerFile : public SdContainer
     void                   titleSet(const QString title );
 
     //!
+    //! \brief publicSet Mark object as public
+    //!
+    virtual void           publicSet();
+
+    //!
     //! \brief json Overloaded function to write object content into json writer
     //!             Overrided function
     //! \param js   Json writer
