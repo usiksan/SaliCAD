@@ -63,7 +63,7 @@ void SdProjectItem::setTitle(const QString title, const QString undoTitle)
   if( undo != nullptr ) {
     if( !undoTitle.isEmpty() )
       undo->begin( undoTitle, this, false );
-    undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable );
+    undo->projectItemInfo( this, &mTitle, &mAuthorKey, &mFileUid, &mEditEnable, &mIsPublic );
     }
 
   titleSet( title );

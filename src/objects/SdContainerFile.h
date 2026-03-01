@@ -118,7 +118,9 @@ class SdContainerFile : public SdContainer
     static QString         authorGlobalName( const QString &publicAuthorKey );
 
   protected:
-    //Set creation time as current
+    //!
+    //! \brief updateCreationTime Set creation time as current
+    //!
     void                   updateCreationTime();
 
     //!

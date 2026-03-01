@@ -254,7 +254,9 @@ QString SdContainerFile::authorGlobalName(const QString &publicAuthorKey)
 
 
 
-//On call this function time setup after previous time
+//!
+//! \brief updateCreationTime Set creation time as current
+//!
 void SdContainerFile::updateCreationTime()
   {
   int time = SvTime2x::current();
@@ -262,6 +264,7 @@ void SdContainerFile::updateCreationTime()
     mFileUid.mCreateTime++;
   else
     mFileUid.mCreateTime = time;
+  setProjectDirtyFlag();
   }
 
 
