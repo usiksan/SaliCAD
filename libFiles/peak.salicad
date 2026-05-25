@@ -1,10 +1,14 @@
 {
+    "A file type": "SaliCAD file",
+    "A version": 2,
+    "Author": "",
     "ChildList": [
         {
             "Author": "salicad",
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1450,
                         "y": 2540
@@ -13,13 +17,14 @@
                         "x": 9750,
                         "y": -10160
                     },
-                    "id": "5608b8247840",
+                    "id": "563c06f8f900",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 0
@@ -28,13 +33,14 @@
                         "x": 1450,
                         "y": 0
                     },
-                    "id": "5608b9cffd10",
+                    "id": "563c06f0c580",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": -2540
@@ -43,13 +49,14 @@
                         "x": 1450,
                         "y": -2540
                     },
-                    "id": "5608baa29bf0",
+                    "id": "563c06ee7900",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": -7620
@@ -58,13 +65,14 @@
                         "x": 1450,
                         "y": -7620
                     },
-                    "id": "5608baa45d00",
+                    "id": "563c06c00b60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 11200,
                         "y": -7620
@@ -73,13 +81,14 @@
                         "x": 9750,
                         "y": -7620
                     },
-                    "id": "5608b963fbb0",
+                    "id": "563c0683e100",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 11200,
                         "y": 0
@@ -88,36 +97,31 @@
                         "x": 9750,
                         "y": 0
                     },
-                    "id": "5608b3ebe780",
+                    "id": "563c0683e040",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 1450,
                         "y": 0
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "1",
                     "NumberPos": {
                         "x": 0,
                         "y": 250
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": 0
@@ -125,33 +129,28 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5608baa22cf0",
+                    "id": "563c06d20980",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 1450,
                         "y": -2540
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "2",
                     "NumberPos": {
                         "x": 0,
                         "y": -2290
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": -2540
@@ -159,33 +158,28 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5608b8f4f5e0",
+                    "id": "563c06d74c40",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 1450,
                         "y": -7620
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "4",
                     "NumberPos": {
                         "x": 0,
                         "y": -7370
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": -7620
@@ -193,33 +187,28 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5608ba34a560",
+                    "id": "563c075b3c00",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 9750,
                         "y": -7620
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SRM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 2,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "5",
                     "NumberPos": {
                         "x": 11200,
                         "y": -7370
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SRM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 2,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 11200,
                         "y": -7620
@@ -227,33 +216,28 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5608ba34b610",
+                    "id": "563c06c00bc0",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 9750,
                         "y": 0
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SRM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 2,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "8",
                     "NumberPos": {
                         "x": 11200,
                         "y": 250
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SRM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 2,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 11200,
                         "y": 0
@@ -261,54 +245,51 @@
                     "PartPinLayer": "Pin.Top",
                     "PartPinType": "r2x1m0.1s0.04",
                     "Stratum": "1",
-                    "id": "5608ba34b740",
+                    "id": "563c06e80a70",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 5625,
                         "y": 625
                     },
-                    "id": "5608ba9aa350",
+                    "id": "7f9ba4007ae0",
                     "over": {
                         "b": 1162,
                         "r": 6452,
                         "x": 4820,
                         "y": 85
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Ident.Top",
-                    "propTextMirror": 0,
                     "propTextSize": 1000,
-                    "propTextVert": 1,
                     "text": "{id}",
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 5625,
                         "y": -6250
                     },
-                    "id": "5608baa41b40",
+                    "id": "563c06d40900",
                     "over": {
                         "b": -5713,
                         "r": 7140,
                         "x": 4116,
                         "y": -6790
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Value.Top",
-                    "propTextMirror": 0,
                     "propTextSize": 1000,
-                    "propTextVert": 1,
                     "text": "{value}",
                     "type": "Value"
                 }
             ],
+            "Cpid": 0,
             "Created": 40162385,
             "Edit enable": false,
             "Origin": {
@@ -318,7 +299,7 @@
             "Parametrs": {
             },
             "Title": "peak smd x8 5pins",
-            "id": "5608ba9d4890",
+            "id": "563c06e78bc0",
             "type": "Part"
         },
         {
@@ -326,6 +307,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 4000,
                         "y": 1000
@@ -334,13 +316,14 @@
                         "x": 0,
                         "y": 3000
                     },
-                    "id": "5608ba308970",
+                    "id": "563c06e111c0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 1250,
                         "y": 1000
@@ -349,13 +332,14 @@
                         "x": 1250,
                         "y": 3000
                     },
-                    "id": "5608b820a910",
+                    "id": "563c06f6fbf0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2750,
                         "y": 1000
@@ -364,13 +348,14 @@
                         "x": 2750,
                         "y": 3000
                     },
-                    "id": "5608b9c763b0",
+                    "id": "563c06cf4d90",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -750,
                         "y": 2500
@@ -379,13 +364,14 @@
                         "x": 0,
                         "y": 2500
                     },
-                    "id": "5608b8f8a1b0",
+                    "id": "563c06f362b0",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -750,
                         "y": 1500
@@ -394,13 +380,14 @@
                         "x": 0,
                         "y": 1500
                     },
-                    "id": "5608b88d8ac0",
+                    "id": "563c06d3f110",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 4000,
                         "y": 2500
@@ -409,13 +396,14 @@
                         "x": 4750,
                         "y": 2500
                     },
-                    "id": "5608b8242a00",
+                    "id": "563c074b7e10",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 4000,
                         "y": 1500
@@ -424,211 +412,190 @@
                         "x": 4750,
                         "y": 1500
                     },
-                    "id": "5608b88a19e0",
+                    "id": "563c06bfd200",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2000,
                         "y": 2500
                     },
-                    "id": "5608baa41440",
+                    "id": "7f9b9c009b40",
                     "over": {
                         "b": 2704,
                         "r": 2437,
                         "x": 1563,
                         "y": 2293
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Component",
-                    "propTextMirror": 0,
                     "propTextSize": 375,
-                    "propTextVert": 1,
                     "text": "PWR",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "+Vin",
                     "NamePos": {
                         "x": 625,
                         "y": 2500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
+                    "Number": "",
                     "NumberPos": {
                         "x": -500,
                         "y": 2750
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": -750,
                         "y": 2500
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608b8f70580",
+                    "id": "563c06f8c950",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "-Vin",
                     "NamePos": {
                         "x": 625,
                         "y": 1500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
+                    "Number": "",
                     "NumberPos": {
                         "x": -500,
                         "y": 1750
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": -750,
                         "y": 1500
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608ba34a6f0",
+                    "id": "563c06da88c0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "+Vout",
                     "NamePos": {
                         "x": 3375,
                         "y": 2500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
+                    "Number": "",
                     "NumberPos": {
                         "x": 4500,
                         "y": 2750
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 4750,
                         "y": 2500
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608ba2ff950",
+                    "id": "563c06f66df0",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Name": "COM",
                     "NamePos": {
                         "x": 3375,
                         "y": 1500
                     },
-                    "NameTextDir": 0,
+                    "NameTextDirMirHorVer": "0SCM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 1,
                     "NameTextLayer": "PinName",
-                    "NameTextMirror": 0,
                     "NameTextSize": 375,
-                    "NameTextVert": 1,
+                    "Number": "",
                     "NumberPos": {
                         "x": 4500,
                         "y": 1750
                     },
-                    "NumberTextDir": 0,
+                    "NumberTextDirMirHorVer": "0SCM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 1,
                     "NumberTextLayer": "PinNumber",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 375,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 4750,
                         "y": 1500
                     },
                     "SymPinLayer": "Pin",
                     "SymPinType": 7,
-                    "id": "5608ba2ff600",
+                    "id": "563c06f43810",
                     "type": "SymPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2000,
                         "y": 3250
                     },
-                    "id": "5608ba34ad00",
+                    "id": "563c06d94800",
                     "over": {
                         "b": 3440,
                         "r": 2286,
                         "x": 1717,
                         "y": 3061
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Ident",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{id}",
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2000,
                         "y": 750
                     },
-                    "id": "5608b9c72240",
+                    "id": "563c06d8a770",
                     "over": {
                         "b": 940,
                         "r": 2533,
                         "x": 1469,
                         "y": 561
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Value",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{value}",
                     "type": "Value"
                 }
             ],
+            "Cpid": 0,
             "Created": 40162796,
             "Edit enable": false,
             "Origin": {
@@ -638,7 +605,7 @@
             "Parametrs": {
             },
             "Title": "DC-DC 1channel (symbol)",
-            "id": "5608b8888000",
+            "id": "563c06b2b3a0",
             "type": "Symbol"
         },
         {
@@ -646,6 +613,7 @@
             "Auto": true,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "+Vin": "2",
                         "+Vout": "5",
@@ -654,17 +622,19 @@
                     },
                     "SymbolId": "Symbol\rDC-DC 1channel (symbol)\rsalicad",
                     "SymbolTitle": "DC-DC 1channel (symbol) (salicad)",
-                    "id": "5608b9c6e350",
+                    "id": "563c06f183e0",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rpeak smd x8 5pins\rsalicad",
                     "PartTitle": "peak smd x8 5pins (salicad)",
-                    "id": "5608b4552ff0",
+                    "id": "563c06db0e80",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 42625177,
             "Edit enable": false,
             "Origin": {
@@ -817,7 +787,7 @@
                 "24V",
                 "42mA"
             ],
-            "id": "5608baa443e0",
+            "id": "563c06f9c3f0",
             "type": "Comp"
         },
         {
@@ -825,6 +795,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": -1940,
                         "y": -1600
@@ -833,18 +804,19 @@
                         "x": 9560,
                         "y": 4400
                     },
-                    "id": "5608b8904e00",
+                    "id": "563c06d47d60",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Rect"
                 },
                 {
+                    "Cpid": 0,
                     "center": {
                         "x": 0,
                         "y": -1100
                     },
-                    "id": "5608b2a9b1c0",
+                    "id": "563c06e99d70",
                     "lineLayer": "Component",
                     "lineType": 0,
                     "lineWidth": 0,
@@ -852,29 +824,24 @@
                     "type": "Circle"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 0,
                         "y": -1600
                     },
-                    "NameTextDir": 90000,
+                    "NameTextDirMirHorVer": "1SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "1",
                     "NumberPos": {
                         "x": -250,
                         "y": 0
                     },
-                    "NumberTextDir": 90000,
+                    "NumberTextDirMirHorVer": "1SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 0,
                         "y": 0
@@ -882,33 +849,28 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "r1.4x1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608ba318890",
+                    "id": "563c06dfd710",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 2540,
                         "y": -1600
                     },
-                    "NameTextDir": 90000,
+                    "NameTextDirMirHorVer": "1SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "2",
                     "NumberPos": {
                         "x": 2290,
                         "y": 0
                     },
-                    "NumberTextDir": 90000,
+                    "NumberTextDirMirHorVer": "1SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 2540,
                         "y": 0
@@ -916,33 +878,28 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608ba9e3560",
+                    "id": "563c06e0d180",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 5080,
                         "y": -1600
                     },
-                    "NameTextDir": 90000,
+                    "NameTextDirMirHorVer": "1SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "3",
                     "NumberPos": {
                         "x": 4830,
                         "y": 0
                     },
-                    "NumberTextDir": 90000,
+                    "NumberTextDirMirHorVer": "1SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 5080,
                         "y": 0
@@ -950,33 +907,28 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608b9ce2260",
+                    "id": "563c06f78200",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "NamePos": {
                         "x": 7620,
                         "y": -1600
                     },
-                    "NameTextDir": 90000,
+                    "NameTextDirMirHorVer": "1SLM",
                     "NameTextFont": 0,
-                    "NameTextHorz": 0,
                     "NameTextLayer": "Invisible",
-                    "NameTextMirror": 0,
                     "NameTextSize": 500,
-                    "NameTextVert": 1,
                     "Number": "4",
                     "NumberPos": {
                         "x": 7370,
                         "y": 0
                     },
-                    "NumberTextDir": 90000,
+                    "NumberTextDirMirHorVer": "1SLM",
                     "NumberTextFont": 0,
-                    "NumberTextHorz": 0,
                     "NumberTextLayer": "Invisible",
-                    "NumberTextMirror": 0,
                     "NumberTextSize": 500,
-                    "NumberTextVert": 1,
                     "Origin": {
                         "x": 7620,
                         "y": 0
@@ -984,54 +936,51 @@
                     "PartPinLayer": "Pin",
                     "PartPinType": "c1.4d0.6m0.1",
                     "Stratum": "3fffffff",
-                    "id": "5608baa415c0",
+                    "id": "563c073dfd80",
                     "type": "PartPin"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 3750,
                         "y": 3750
                     },
-                    "id": "5608ba302fe0",
+                    "id": "563c06e65dd0",
                     "over": {
                         "b": 4293,
                         "r": 4566,
                         "x": 2933,
                         "y": 3192
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Ident.Top",
-                    "propTextMirror": 0,
                     "propTextSize": 1000,
-                    "propTextVert": 1,
                     "text": "{id}",
                     "type": "Ident"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 3750,
                         "y": 1875
                     },
-                    "id": "5608b8f73f70",
+                    "id": "563c06d3a4f0",
                     "over": {
                         "b": 2419,
                         "r": 5278,
                         "x": 2228,
                         "y": 1318
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Value.Top",
-                    "propTextMirror": 0,
                     "propTextSize": 1000,
-                    "propTextVert": 1,
                     "text": "{value}",
                     "type": "Value"
                 }
             ],
+            "Cpid": 0,
             "Created": 40164920,
             "Edit enable": false,
             "Origin": {
@@ -1041,7 +990,7 @@
             "Parametrs": {
             },
             "Title": "sip4 plastic case",
-            "id": "5608b23ab0c0",
+            "id": "563c069f8070",
             "type": "Part"
         },
         {
@@ -1049,6 +998,7 @@
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "PinAssotiation": {
                         "+Vin": "2",
                         "+Vout": "4",
@@ -1057,17 +1007,19 @@
                     },
                     "SymbolId": "Symbol\rDC-DC 1channel (symbol)\rsalicad",
                     "SymbolTitle": "DC-DC 1channel (symbol) (salicad)",
-                    "id": "5608b9c98ba0",
+                    "id": "563c06e12e20",
                     "type": "Section"
                 },
                 {
+                    "Cpid": 0,
                     "Default": false,
                     "PartId": "Part\rsip4 plastic case\rsalicad",
                     "PartTitle": "sip4 plastic case (salicad)",
-                    "id": "5608ba34ba30",
+                    "id": "563c069f7f10",
                     "type": "PartVariant"
                 }
             ],
+            "Cpid": 0,
             "Created": 42625197,
             "Edit enable": false,
             "Origin": {
@@ -1335,12 +1287,16 @@
                 "24V",
                 "50mA"
             ],
-            "id": "5608b9cfdf00",
+            "id": "563c06831a90",
             "type": "Comp"
         }
     ],
+    "Cpid": 0,
+    "Created": 0,
+    "Edit enable": true,
     "Parametrs": {
     },
-    "id": "5608b9619110",
+    "Title": "",
+    "id": "563c06f783f0",
     "type": "Project"
 }

@@ -1,10 +1,14 @@
 {
+    "A file type": "SaliCAD file",
+    "A version": 2,
+    "Author": "",
     "ChildList": [
         {
             "Author": "salicad",
             "Auto": false,
             "ChildList": [
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 1500
@@ -13,13 +17,14 @@
                         "x": 17000,
                         "y": 1500
                     },
-                    "id": "2a78bc0",
+                    "id": "55c9257bb260",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 7000,
                         "y": 0
@@ -28,13 +33,14 @@
                         "x": 7000,
                         "y": 3600
                     },
-                    "id": "2a78cf0",
+                    "id": "55c925917bd0",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 9000,
                         "y": 0
@@ -43,13 +49,14 @@
                         "x": 9000,
                         "y": 1500
                     },
-                    "id": "2a78db0",
+                    "id": "55c9257097b0",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 2000,
                         "y": 1500
@@ -58,13 +65,14 @@
                         "x": 2000,
                         "y": 5000
                     },
-                    "id": "2a78ec0",
+                    "id": "55c9258b5a80",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 3600
@@ -73,13 +81,14 @@
                         "x": 17000,
                         "y": 3600
                     },
-                    "id": "2a78f50",
+                    "id": "55c92576ed70",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 5000
@@ -88,13 +97,14 @@
                         "x": 17000,
                         "y": 5000
                     },
-                    "id": "2a79010",
+                    "id": "55c92595c850",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 15500,
                         "y": 1500
@@ -103,13 +113,14 @@
                         "x": 15500,
                         "y": 0
                     },
-                    "id": "2a790d0",
+                    "id": "55c925939030",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 15500,
                         "y": 3600
@@ -118,13 +129,14 @@
                         "x": 15500,
                         "y": 5000
                     },
-                    "id": "2a79220",
+                    "id": "55c9259f41b0",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 14000,
                         "y": 5000
@@ -133,13 +145,14 @@
                         "x": 14000,
                         "y": 1500
                     },
-                    "id": "2a792e0",
+                    "id": "55c925747090",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 9000,
                         "y": 3600
@@ -148,13 +161,14 @@
                         "x": 9000,
                         "y": 5000
                     },
-                    "id": "2a793a0",
+                    "id": "55c9259f42d0",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 2200
@@ -163,13 +177,14 @@
                         "x": 7000,
                         "y": 2200
                     },
-                    "id": "2a79460",
+                    "id": "55c9250855b0",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "a": {
                         "x": 0,
                         "y": 2900
@@ -178,189 +193,174 @@
                         "x": 7000,
                         "y": 2900
                     },
-                    "id": "2a79520",
+                    "id": "55c92573b280",
                     "lineLayer": "Remark",
                     "lineType": 0,
                     "lineWidth": 0,
                     "type": "Line"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 16200,
                         "y": 4800
                     },
-                    "id": "2a795e0",
+                    "id": "55c9257c30e0",
                     "over": {
-                        "h": 362,
-                        "w": 755,
+                        "b": 4981,
+                        "r": 16584,
                         "x": 15830,
                         "y": 4620
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "Scale",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 15500,
                         "y": 3300
                     },
-                    "id": "2a796e0",
+                    "id": "55c92567cec0",
                     "over": {
-                        "h": 362,
-                        "w": 544,
+                        "b": 3471,
+                        "r": 15769,
                         "x": 15226,
                         "y": 3110
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "File",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 16200,
                         "y": 1300
                     },
-                    "id": "2a797e0",
+                    "id": "55c925647d60",
                     "over": {
-                        "h": 362,
-                        "w": 1087,
+                        "b": 1478,
+                        "r": 16735,
                         "x": 15649,
                         "y": 1117
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "Format",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 100,
                         "y": 3200
                     },
-                    "id": "2a799c0",
+                    "id": "7f50ec008c00",
                     "over": {
-                        "h": 362,
-                        "w": 1057,
+                        "b": 3380,
+                        "r": 1152,
                         "x": 96,
                         "y": 3019
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SLM",
                     "propTextFont": 0,
-                    "propTextHorz": 0,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "Author",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2200,
                         "y": 3200
                     },
-                    "id": "2a79ac0",
+                    "id": "55c925a47fe0",
                     "over": {
-                        "h": 362,
-                        "w": 1329,
+                        "b": 3380,
+                        "r": 3538,
                         "x": 2210,
                         "y": 3019
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SLM",
                     "propTextFont": 0,
-                    "propTextHorz": 0,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{Author}",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 100,
                         "y": 2500
                     },
-                    "id": "2a79b90",
+                    "id": "55c925831820",
                     "over": {
-                        "h": 362,
-                        "w": 1540,
+                        "b": 2686,
+                        "r": 1635,
                         "x": 96,
                         "y": 2325
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SLM",
                     "propTextFont": 0,
-                    "propTextHorz": 0,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "Controlled",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 2200,
                         "y": 2500
                     },
-                    "id": "2a79ca0",
+                    "id": "55c9257ad4d0",
                     "over": {
-                        "h": 362,
-                        "w": 1812,
+                        "b": 2686,
+                        "r": 4021,
                         "x": 2210,
                         "y": 2325
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SLM",
                     "propTextFont": 0,
-                    "propTextHorz": 0,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{Controlled}",
                     "type": "Text"
                 },
                 {
+                    "Cpid": 0,
                     "Origin": {
                         "x": 10400,
                         "y": 2600
                     },
-                    "id": "2a79db0",
+                    "id": "55c925874700",
                     "over": {
-                        "h": 362,
-                        "w": 876,
+                        "b": 2776,
+                        "r": 10846,
                         "x": 9971,
                         "y": 2415
                     },
-                    "propTextDir": 0,
+                    "propTextDirMirHorVer": "0SCM",
                     "propTextFont": 0,
-                    "propTextHorz": 1,
                     "propTextLayer": "Remark",
-                    "propTextMirror": 0,
                     "propTextSize": 350,
-                    "propTextVert": 1,
                     "text": "{title}",
                     "type": "Text"
                 }
             ],
+            "Cpid": 0,
             "Created": 23496906,
             "Edit enable": true,
             "Origin": {
@@ -371,12 +371,16 @@
                 "{sindex}": "1"
             },
             "Title": "iso-stamp",
-            "id": "2a78330",
+            "id": "55c92530f340",
             "type": "Sheet"
         }
     ],
+    "Cpid": 0,
+    "Created": 0,
+    "Edit enable": true,
     "Parametrs": {
     },
-    "id": "2a77680",
+    "Title": "",
+    "id": "55c92568be20",
     "type": "Project"
 }
